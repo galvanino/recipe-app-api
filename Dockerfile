@@ -1,0 +1,20 @@
+FROM python:3.8-alpine
+LABEL maintainer="Numentec"
+
+ENV PYTHONUNBUFFERED=1
+
+#COPY FILE requirements.txt FROM LOCAL MACHINE TO DOCKER ROOT DIRECTORY
+COPY ./requirements.txt /requirements.txt
+#INSTALL requirements IN DOCKER DIRECTORY
+RUN pip install -r /requirements.txt
+
+#CREATE A DIRECTORY NAMED app IN DOCKER ROOT DIRECTORY
+RUN mkdir /app
+#MAKE THE CREATED DIRECTORY A DEFAULT WORKING DIRECTORY
+WORKDIR /app
+#COPY ALL IN LOCAL ./app DIRECTORY TO DOCKER WORKING DIRECTORY
+COPY ./app /app
+
+
+RUN adduser -D user
+USER user
